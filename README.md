@@ -50,3 +50,9 @@ $ npm install -g .
 ## License
 
 MIT
+
+
+## What would be next
+I want to add https for localhost.  
+https://blog.jxck.io/entries/2020-06-29/https-for-localhost.html  
+https://crieit.net/posts/localhost-127-0-0-1-HTTPS
