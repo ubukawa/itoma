@@ -4,6 +4,9 @@
 ssh-key/privkey.pem
 ssh-key/fullchain.pem
 
+# test data
+itoma-test
+
 # Logs
 logs
 *.log
