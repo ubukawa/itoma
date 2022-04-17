@@ -1,5 +1,9 @@
 .envrc
 
+# ssh key
+ssh-key/privkey.pem
+ssh-key/fullchain.pem
+
 # Logs
 logs
 *.log

@@ -7,6 +7,10 @@ import { parser } from '@unvt/charites/dist/lib/yaml-parser'
 
 import type { VectorSourceSpecification } from '@maplibre/maplibre-gl-style-spec/types'
 import { Server } from 'http'
+//import spdy from 'spdy' // test (four https) --> no good 
+const spdy = require('spdy') // test for https
+const privkeyPath = 'ssh-key/privkey.pem' //for https (it should be stored in config)
+const fullchainPath = 'ssh-key/fullchain.pem' //for https (it should be stored in config)
 
 export interface ServeOptions {
   mapboxAccessToken?: string
@@ -387,6 +391,7 @@ export async function serve(source: string, options: ServeOptions) {
   app.use('/arcgis', express.static(path.join(providerDir, 'arcgis')))
 
   const serverPromise = new Promise<Server>((resolve) => {
+    /*
     const server = app.listen(port, () => {
       console.log(`itoma listening on port ${port}\n`)
       console.log(`MapLibre interface: http://localhost:${port}/maplibre`)
@@ -394,6 +399,19 @@ export async function serve(source: string, options: ServeOptions) {
       console.log(`ArcGIS interface  : http://localhost:${port}/arcgis`)
       resolve(server)
     })
+    */
+   //test (from here)
+    const server = spdy.createServer({
+      key: fs.readFileSync(privkeyPath),
+      cert: fs.readFileSync(fullchainPath)
+    }, app).listen(port, () => {
+      console.log(`itoma listening on port ${port}\n`)
+      console.log(`MapLibre interface: https://localhost:${port}/maplibre`)
+      console.log(`Mapbox interface  : https://localhost:${port}/mapbox`)
+      console.log(`ArcGIS interface  : https://localhost:${port}/arcgis`)
+      resolve(server)
+    })
+    //test (until here)
   })
   const server = await serverPromise
 
