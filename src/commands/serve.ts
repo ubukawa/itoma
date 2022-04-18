@@ -23,8 +23,8 @@ export interface ServeOptions {
 async function getTileUrls(url: string, serverPort: number) {
   const resp = await fetch(url, {
     headers: {
-      origin: `http://localhost:${serverPort}`,
-      referer: `http://localhost:${serverPort}`,
+      origin: `https://localhost:${serverPort}`,
+      referer: `https://localhost:${serverPort}`,
     },
   })
   const json = await resp.json()
