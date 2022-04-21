@@ -11,6 +11,8 @@ import { Server } from 'http'
 const spdy = require('spdy') // test for https
 const privkeyPath = 'ssh-key/privkey.pem' //for https (it should be stored in config)
 const fullchainPath = 'ssh-key/fullchain.pem' //for https (it should be stored in config)
+//for Cross Origin
+const cors = require('cors') 
 
 export interface ServeOptions {
   mapboxAccessToken?: string
@@ -68,6 +70,7 @@ export async function serve(source: string, options: ServeOptions) {
   const glyphsUrl = style.glyphs ? new URL(style.glyphs) : undefined
 
   const app = express()
+  app.use(cors()) // FOR cors
   if (options.trustProxy) {
     app.set('trust proxy', true)
   }
